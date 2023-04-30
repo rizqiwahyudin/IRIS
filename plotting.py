@@ -14,7 +14,7 @@ import os
 #todo, optimize code, and make it easier to run. now i gets the data many times.it is slow.
 #------------Variables--------------#
 classes = 3
-iris_names = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+iris_names = ['Setosa', 'Versicolor', 'Virginica']
 features = ['sepal_length','sepal_width','petal_length','petal_width']
 path = 'iris.csv'
 path_setosa = 'class_1.csv'
@@ -50,7 +50,7 @@ def load_data(path, one=False, maxVal=None, normalize=False, d=','): #change nor
 
 #-----------plotting----------------#
 def plot_petal(data):
-    color = ['red', 'blue', 'green'] #get different colors to the plot
+    color = ['magenta', 'yellow', 'cyan'] #get different colors to the plot
     #petal_length = np.array(data['petal_length'])
     #petal_width = np.array(data['petal_width'])
     for i in range(len(data)):# iterate through the three datasets
@@ -66,7 +66,7 @@ def plot_petal(data):
     plt.show()
 
 def plot_sepal(data):
-    color = ['red', 'blue', 'green'] #get different colors to the plot
+    color = ['magenta', 'yellow', 'cyan'] #get different colors to the plot
     #petal_length = np.array(data['petal_length'])
     #petal_width = np.array(data['petal_width'])
     for i in range(len(data)):# iterate through the three datasets
@@ -83,13 +83,15 @@ def plot_sepal(data):
 def plot_histogram(data): #change step size, to change the dimension on the histogram bars, org:0.03, used 0.003 when normalized
     sns.set()
     sns.set_style("white")
+
+
     
     # make the 'species' column categorical to fix the order
     data['species'] = pd.Categorical(data['species'])
 
     fig, axs = plt.subplots(2, 2, figsize=(12, 6))
     for col, ax in zip(data.columns[:4], axs.flat):
-        sns.histplot(data=data, x=col, kde=True, hue='species', common_norm=False, legend=ax==axs[0,0], ax=ax)
+        sns.histplot(data=data, x=col, kde=True, hue='species', palette=['red', 'yellow', 'blue'], common_norm=False, legend=ax==axs[0,0], ax=ax)
     plt.tight_layout()
     plt.savefig('newhist_withbestfit.png',dpi=200)
     plt.show()
@@ -97,7 +99,7 @@ def plot_histogram(data): #change step size, to change the dimension on the hist
 def oldhist(data,step=0.03):
     #--------making histogram basis-------#
     fig, axes = plt.subplots(nrows= 2, ncols=2, sharex='col', sharey='row')#basis for subplots
-    colors= ['blue', 'red', 'green', 'black'] #colors for histogram
+    colors= ['magenta', 'cyan', 'yellow', 'black'] #colors for histogram
     max_val = np.amax(data)# Finds maxvalue in samples
 
 
@@ -140,7 +142,8 @@ if __name__ == '__main__':
     
     #-----------------plot------------------------#
     plot_histogram(tot_data)
-    plot_histogram(tot_data)
-    plot_petal(tot_data)
+    # plot_petal(tot_data)
+
+
 
 
