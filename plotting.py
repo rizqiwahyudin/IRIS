@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from numpy.lib.function_base import gradient
 import pandas as pd
 from sklearn.model_selection import train_test_split
-import seaborn as sns
+import seaborn as sn
 import matplotlib.mlab as mlab
 #from scipy.stats import norm
 import scipy.stats
@@ -49,77 +49,77 @@ def load_data(path, one=False, maxVal=None, normalize=False, d=','): #change nor
 #--------^Importing data^-----------#
 
 #-----------plotting----------------#
-def plot_petal(data):
-    color = ['magenta', 'yellow', 'cyan'] #get different colors to the plot
-    #petal_length = np.array(data['petal_length'])
-    #petal_width = np.array(data['petal_width'])
-    for i in range(len(data)):# iterate through the three datasets
-       name = iris_names[i] #get the name for the classes from the global array, iris_names
-       plt.scatter(np.array(data[i]['petal_width']),np.array(data[i]['petal_length']), label=name, color=color[i]) #plot a scatter plot,with length as x-axis and width as y-axis
-    #add som useful information to plot under.
-    plt.legend()
-    plt.xlabel('Petal width in cm') 
-    plt.ylabel('Petal length in cm')
-    plt.title('Petal data')
-    plt.grid('On')
-    plt.savefig('petal_scatterplot_gridon_width-length.png')
-    plt.show()
+# def plot_petal(data):
+#     color = ['magenta', 'yellow', 'cyan'] #get different colors to the plot
+#     #petal_length = np.array(data['petal_length'])
+#     #petal_width = np.array(data['petal_width'])
+#     for i in range(len(data)):# iterate through the three datasets
+#        name = iris_names[i] #get the name for the classes from the global array, iris_names
+#        plt.scatter(np.array(data[i]['petal_width']),np.array(data[i]['petal_length']), label=name, color=color[i]) #plot a scatter plot,with length as x-axis and width as y-axis
+#     #add som useful information to plot under.
+#     plt.legend()
+#     plt.xlabel('Petal width in cm') 
+#     plt.ylabel('Petal length in cm')
+#     plt.title('Petal data')
+#     plt.grid('On')
+#     plt.savefig('petal_scatterplot_gridon_width-length.png')
+#     plt.show()
 
-def plot_sepal(data):
-    color = ['magenta', 'yellow', 'cyan'] #get different colors to the plot
-    #petal_length = np.array(data['petal_length'])
-    #petal_width = np.array(data['petal_width'])
-    for i in range(len(data)):# iterate through the three datasets
-       name = iris_names[i] #get the name for the classes from the global array, iris_names
-       plt.scatter(np.array(data[i]['sepal_width']),np.array(data[i]['sepal_length']), label=name, color=color[i]) #plot a scatter plot,with length as x-axis and width as y-axis
-    #add som useful information to plot under.
-    plt.legend()
-    plt.xlabel('Sepal width in cm')
-    plt.ylabel('Sepal length in cm')
-    plt.title('Sepal data')
-    #plt.grid('On')
-    plt.show()
+# def plot_sepal(data):
+#     color = ['magenta', 'yellow', 'cyan'] #get different colors to the plot
+#     #petal_length = np.array(data['petal_length'])
+#     #petal_width = np.array(data['petal_width'])
+#     for i in range(len(data)):# iterate through the three datasets
+#        name = iris_names[i] #get the name for the classes from the global array, iris_names
+#        plt.scatter(np.array(data[i]['sepal_width']),np.array(data[i]['sepal_length']), label=name, color=color[i]) #plot a scatter plot,with length as x-axis and width as y-axis
+#     #add som useful information to plot under.
+#     plt.legend()
+#     plt.xlabel('Sepal width in cm')
+#     plt.ylabel('Sepal length in cm')
+#     plt.title('Sepal data')
+#     #plt.grid('On')
+#     plt.show()
+
+
 
 def plot_histogram(data): #change step size, to change the dimension on the histogram bars, org:0.03, used 0.003 when normalized
-    sns.set()
-    sns.set_style("white")
-
-
+    sn.set()
+    sn.set_style("white")
     
     # make the 'species' column categorical to fix the order
     data['species'] = pd.Categorical(data['species'])
 
     fig, axs = plt.subplots(2, 2, figsize=(12, 6))
     for col, ax in zip(data.columns[:4], axs.flat):
-        sns.histplot(data=data, x=col, kde=True, hue='species', palette=['red', 'yellow', 'blue'], common_norm=False, legend=ax==axs[0,0], ax=ax)
+        sn.histplot(data=data, x=col, kde=True, hue='species', palette=['red', 'yellow', 'blue'], common_norm=False, legend=ax==axs[0,0], ax=ax)
     plt.tight_layout()
     plt.savefig('newhist_withbestfit.png',dpi=200)
     plt.show()
    
-def oldhist(data,step=0.03):
-    #--------making histogram basis-------#
-    fig, axes = plt.subplots(nrows= 2, ncols=2, sharex='col', sharey='row')#basis for subplots
-    colors= ['magenta', 'cyan', 'yellow', 'black'] #colors for histogram
-    max_val = np.amax(data)# Finds maxvalue in samples
+# def oldhist(data,step=0.03):
+#     #--------making histogram basis-------#
+#     fig, axes = plt.subplots(nrows= 2, ncols=2, sharex='col', sharey='row')#basis for subplots
+#     colors= ['magenta', 'cyan', 'yellow', 'black'] #colors for histogram
+#     max_val = np.amax(data)# Finds maxvalue in samples
 
 
 
-    for i, ax in enumerate(axes.flat):#loop through every feature
-        for label, color in zip(range(len(iris_names)), colors): #loop through every class
-            #plot histogram from class[feature]
-            ax.hist(data[label][features[i]], label=iris_names[label], color=color, stacked=True,alpha=0.5)
-            ax.set_xlabel(features[i]+'( cm)') #add axis name
-            ax.legend(loc='upper right')
+#     for i, ax in enumerate(axes.flat):#loop through every feature
+#         for label, color in zip(range(len(iris_names)), colors): #loop through every class
+#             #plot histogram from class[feature]
+#             ax.hist(data[label][features[i]], label=iris_names[label], color=color, stacked=True,alpha=0.5)
+#             ax.set_xlabel(features[i]+'( cm)') #add axis name
+#             ax.legend(loc='upper right')
         
-        ax.set(xlabel='Measured [cm]', ylabel='Number of samples') #sets label name
-        ax.label_outer() #makes the label only be on the outer part of the plots
-        ax.legend(prop={'size': 7}) #change size of legend
-        ax.set_title(f'Feature {i+1}: {features[i]}') #set title for each plot
-        #ax.grid('on') #grid on or off
+#         ax.set(xlabel='Measured [cm]', ylabel='Number of samples') #sets label name
+#         ax.label_outer() #makes the label only be on the outer part of the plots
+#         ax.legend(prop={'size': 7}) #change size of legend
+#         ax.set_title(f'Feature {i+1}: {features[i]}') #set title for each plot
+#         #ax.grid('on') #grid on or off
         
-        #plt.savefig('histogram_rap.png',dpi=200)
+#         #plt.savefig('histogram_rap.png',dpi=200)
 
-        plt.show()
+#         plt.show()
 
 
 
